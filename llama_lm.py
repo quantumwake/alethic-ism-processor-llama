@@ -45,7 +45,10 @@ class LlamaChatCompletionProcessor(BaseProcessorLM):
         # TODO FLAG: OFF history flag injected here
         # TODO FEATURE: CONFIG PARAMETERS -> EMBEDDINGS
 
-        client = OpenAI()
+        client = OpenAI(
+            api_key=LLAMA_API_KEY,
+            base_url=LLAMA_API_BASE_URL
+        )
 
         # Create a streaming completion
         stream = client.chat.completions.create(
