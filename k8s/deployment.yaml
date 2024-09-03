@@ -72,6 +72,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: alethic-ism-processor-llama-secret
-                key: llama_API_KEY
+                key: LLAMA_API_KEY
+
       imagePullSecrets:
       - name: regcred

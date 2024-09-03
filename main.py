@@ -69,6 +69,7 @@ class MessagingConsumerLlamaAPI(BaseMessageConsumerProcessor):
                          provider: ProcessorProvider,
                          output_processor_state: ProcessorState,
                          output_state: State):
+        #
         logging.debug(f"received create processor request {provider.class_name}")
 
         if provider.class_name != "NaturalLanguageProcessing":
