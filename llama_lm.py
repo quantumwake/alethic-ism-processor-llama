@@ -4,12 +4,12 @@ from typing import Any
 
 import openai
 import dotenv
-from core.base_processor_lm import BaseProcessorLM
-from core.processor_state import StateConfigStream
-from core.utils.ismlogging import ism_logger
+from ismcore.model.processor_state import StateConfigStream
+from ismcore.processor.base_processor_lm import BaseProcessorLM
+from ismcore.utils.general_utils import build_template_text, parse_response
+from ismcore.utils.ism_logger import ism_logger
 
 from openai import OpenAI, Stream
-from core.utils.general_utils import parse_response, build_template_text
 
 dotenv.load_dotenv()
 
@@ -236,7 +236,6 @@ class LlamaChatCompletionProcessor(BaseProcessorLM):
             stream=False,
         )
 
-        # calcualte the usage
         # calculate_usage(response=stream)
 
         # final raw response, without stripping or splitting

@@ -1,28 +1,22 @@
 import asyncio
 import os
-import random
 import dotenv
+from ismcore.messaging.base_message_consumer_processor import BaseMessageConsumerProcessor
+from ismcore.messaging.base_message_router import Router
+from ismcore.messaging.nats_message_provider import NATSMessageProvider
+from ismcore.model.base_model import Processor, ProcessorProvider, ProcessorState
+from ismcore.model.processor_state import State
+from ismcore.processor.base_processor import (
+    StatePropagationProviderDistributor, \
+    StatePropagationProviderRouterStateSyncStore,
+    StatePropagationProviderRouterStateRouter)
+
+from ismcore.utils.ism_logger import ism_logger
+from ismdb.postgres_storage_class import PostgresDatabaseStorage
 
 from llama_lm import LlamaChatCompletionProcessor
 
 dotenv.load_dotenv()
-
-from core.base_model import (
-    ProcessorProvider,
-    Processor,
-    ProcessorState
-)
-from core.base_processor import (
-    StatePropagationProviderRouterStateSyncStore,
-    StatePropagationProviderDistributor,
-    StatePropagationProviderRouterStateRouter
-)
-from core.messaging.base_message_consumer_processor import BaseMessageConsumerProcessor
-from core.messaging.base_message_router import Router
-from core.messaging.nats_message_provider import NATSMessageProvider
-from core.processor_state import State
-from core.utils.ismlogging import ism_logger
-from db.processor_state_db_storage import PostgresDatabaseWithRedisCacheStorage
 
 # message routing file, used for both ingress and egress message handling
 ROUTING_FILE = os.environ.get("ROUTING_FILE", '.routing.yaml')
@@ -31,7 +25,7 @@ ROUTING_FILE = os.environ.get("ROUTING_FILE", '.routing.yaml')
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:postgres1@localhost:5432/postgres")
 
 # state storage specifically to handle this processor state (stateless obj)
-storage = PostgresDatabaseWithRedisCacheStorage(
+storage = PostgresDatabaseStorage(
     database_url=DATABASE_URL,
     incremental=True
 )
