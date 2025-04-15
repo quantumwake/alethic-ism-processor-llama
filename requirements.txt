@@ -1,0 +1,10 @@
+alethic-ism-core
+alethic-ism-db
+pyyaml
+nats-py
+python-dotenv
+pydantic
+psycopg2
+openai
+tiktoken
+mako
